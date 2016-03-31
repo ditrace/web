@@ -2,7 +2,8 @@
   "name": "dtrace",
   "scripts": {
     "build": "webpack -p",
-    "start": "webpack-dev-server --content-base static/"
+    "start": "webpack-dev-server --content-base static/",
+    "test": "karma start coveralls.js --single-run"
   },
   "devDependencies": {
     "babel-polyfill": "^6.7.2",
