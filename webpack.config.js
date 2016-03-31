@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     context: path.join(__dirname, 'static'),
@@ -18,14 +19,16 @@ module.exports = {
             "moment",
             "bootstrap.css",
             "bootstrap.js",
+            "d3",
             "./js/daterangepicker.js",
             "./js/angular-daterangepicker-plus.js",
             "./css/daterangepicker-bs3.css"
-        ]},
+        ]
+    },
     output: {
         path: path.join(__dirname, '/dist'),
         publicPath: '',
-        filename: '[name].js',
+        filename: '[name]-[hash].js',
     },
     module: {
         loaders: [
@@ -35,20 +38,14 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.css$/,
-                loader: 'style!css',
+                test: /\.(css|less)$/,
+                loader: 'style-loader!css-loader',
             },
-            {
-                test: /\.(woff|eot|ttf|woff2)$/,
-                loader: "file-loader" },
-            {
-                test: /\.html$/,
-                loader: 'html',
-            },
-            { 
-                test: /\.(png|gif|ico|svg)$/, 
-                loader: "url-loader" 
-            }
+            { test: /\.less$/, loader: 'less-loader' },
+            { test: /\.(woff|eot|ttf|woff2)$/, loader: "file-loader" },
+            { test: /\.(png|gif|ico|svg)$/, loader: "url-loader" },
+            { test: /\.(html)$/, loader: "html-loader" },
+            { test: /\.(json)$/, loader: "json-loader" }
         ],
     },
     resolve: {
@@ -57,6 +54,7 @@ module.exports = {
         alias: {
             'bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
             'bootstrap.js': 'bootstrap/dist/js/bootstrap.js',
+            'd3': 'd3/d3.min.js',
             'jQuery': 'jquery'
         }
     },
@@ -70,8 +68,19 @@ module.exports = {
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: "common",
-            filename: "common.js",
+            filename: "common-[hash].js",
             minChunks: Infinity
+        }),
+        new HtmlWebpackPlugin({
+            template: 'index.html',
+            inject: 'head',
+            excludeChunks: ['logs']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'logs.html',
+            template: 'logs.html',
+            inject: 'head',
+            excludeChunks: ['app']
         })
     ],
     resolveLoader: {

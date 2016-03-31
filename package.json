@@ -1,8 +1,8 @@
 {
-  "name": "dtrace",
+  "name": "ditrace",
   "scripts": {
     "build": "webpack -p",
-    "start": "webpack-dev-server --content-base static/",
+    "start": "webpack-dev-server",
     "test": "karma start coveralls.js --single-run"
   },
   "devDependencies": {

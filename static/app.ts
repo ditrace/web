@@ -17,7 +17,7 @@ import {DTraceRows} from './directives/rows';
 
 declare function require(string): any;
 
-var app = angular.module('dTrace', ['daterangepicker', require('angular-ui-bootstrap'), require('angular-cookies')]);
+var app = angular.module('dtrace', ['daterangepicker', require('angular-ui-bootstrap'), require('angular-cookies')]);
 
 require('bootstrap.js');
 require('bootstrap.css');
