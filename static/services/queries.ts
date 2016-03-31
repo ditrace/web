@@ -150,6 +150,9 @@ export class Queries {
             'from': page * 50,
             'size': size || 50,
             'sort': [{ 'duration': { 'order': 'desc' } }],
+            '_source': {
+                'exclude': ['chains']
+            },
             'query': {
                 'bool': {
                     'must': must
