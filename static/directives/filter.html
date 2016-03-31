@@ -1,0 +1,84 @@
+<form ng-submit="update();">
+    <div class="row" style="margin-bottom: 10px">
+        <div class="col-xs-4">
+            <div class="input-group">
+                <span class="input-group-addon" id="date-range">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                <input id="daterange" aria-describedby="date-range" date-range-picker class="form-control date-picker" type="text" ng-model="date"
+                options="date_options" apply="apply_trigger = true;"/>
+            </div>
+        </div>
+        <div class="col-xs-8">
+            <div class="input-group">
+                <span class="input-group-addon" id="annotation-filter">Annotations</span>
+                <input type="text" class="form-control" placeholder="e.g. url_method == POST && rc == 200" aria-describedby="annotation-filter"
+                ng-model="annotations">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="input-group">
+                <span class="input-group-addon" id="traceid-filter">TraceId</span>
+                <input type="text" class="form-control" aria-describedby="traceid-filter" ng-model="traceid">
+            </div>
+        </div>
+        <div class="col-xs-2">
+            <div class="input-group">
+                <span class="input-group-addon" id="group-field">GroupBy</span>
+                <input type="text" id="group-field-input" name="group-field-input" class="form-control" placeholder="url" aria-describedby="group-field"
+                ng-model="group_field">
+                <span class="input-group-btn">
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="false">
+                      <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li role="presentation" ng-repeat="(field, title) in groupBy">
+                        <a role="menuitem" tabindex="-1" ng-style="{'font-weight': group_field == field ? 'bold' : normal}" ng-click="change_groupby(field)"
+                        ng-bind="title"></a>
+                    </li>
+                </ul>
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-2">
+            <div class="input-group">
+                <span class="input-group-addon" id="aggr-field">AggrBy</span>
+                <span class="input-group-btn">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-default dropdown-toggle"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{aggr_field}}
+                        <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a ng-click="change_aggrby('cd')">Client duration</a></li>
+                    <li><a ng-click="change_aggrby('sd')">Server duration</a></li>
+                </ul>
+            </div>
+            </span>
+        </div>
+    </div>
+    <div class="col-xs-2">
+        <div class="input-group">
+            <span class="input-group-addon" id="system-field">System</span>
+            <input type="text" id="system-field-input" name="system-field-input" class="form-control" placeholder="all" aria-describedby="system-field"
+            ng-model="system">
+            <span class="input-group-btn">
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="false">
+                      <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" ng-style="{'font-weight': system == '' ? 'bold' : normal}" ng-click="change_system('')">all</a>
+                    <a ng-repeat="value in systems" role="menuitem" tabindex="-1" ng-style="{'font-weight': system == value ? 'bold' : normal}"
+                    ng-click="change_system(value)">{{ value }}</a>
+                </li>
+            </ul>
+            </span>
+        </div>
+    </div>
+    <input type="submit" class="btn btn-success" value="Filter" />
+    </div>
+</form>

@@ -1,0 +1,29 @@
+<div>
+    <uib-tabset active="active">
+        <uib-tab index="0" select="show('/chains', $event);">
+            <uib-tab-heading>
+                Chains <span ng-if="chains" class="badge" ng-bind="chains.length"></span>
+            </uib-tab-heading>
+            <dtrace-rows rows="chains" filter="filter"></dtrace-rows>
+        </uib-tab>
+        <uib-tab index="1" select="show('/groups', $event);" disable="groups.length === 0">
+            <uib-tab-heading>
+                Group <span ng-if="groups" class="badge">{{groups.length}}</span>
+            </uib-tab-heading>
+            <dtrace-rows rows="groups" filter="filter"></dtrace-rows>
+        </uib-tab>
+        <uib-tab index="2" select="show('/traces', $event);" disable="!traces">
+            <uib-tab-heading>
+                <span ng-if="filter.qpage > 0" ng-click="qpage(-1)" class="clickable">&#8592;</span>
+                <span>Traces</span>
+                <span ng-if="traces" class="badge">
+                    {{filter.qpage * filter.size}} - {{filter.qpage * filter.size + traces.length}} of {{traces.total}}
+                </span>
+                <span ng-if="filter.qpage * filter.size < traces.total - filter.size" ng-click="qpage(1)" class="clickable">
+                    &#8594;
+                </span>
+            </uib-tab-heading>
+            <dtrace-tree ng-if="traces.spans.length" spans="traces.spans" page-size="100"></dtrace-tree>
+        </uib-tab>
+    </uib-tabset>
+</div>

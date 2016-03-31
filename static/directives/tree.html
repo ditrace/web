@@ -1,0 +1,82 @@
+﻿<div>
+  <div class="row" ng-if="pageNumber > 0">
+    <div class="col-xs-12"><div class="btn btn-default" style="width: 100%; height: 30px;" ng-click="show_page(pageNumber - 1);">Page {{pageNumber - 1}} of {{total}} &uarr;</div></div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <table class="table table-condensed trace-tree">
+        <thead>
+          <th style="width: 15%">service</th>
+          <th style="width: 25%">url</th>
+          <th>host</th>
+          <th>request</th>
+          <th>response</th>
+          <th>code</th>
+          <th>cum</th>
+          <th>duration &darr;</th>
+          <th>trace timeline</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="span in page track by $index"
+              ng-class="{'bg-info': span.selected, 'tr-root': $first || page[$index - 1].traceid != span.traceid}"
+              ng-if="span.hidden == false" id="span-{{span.traceid}}-{{span.spanid}}">
+            <td ng-style="{'padding-left': span.chain_level * 5 + 'px'}" class="clickable" ng-click="fold(span);" style="word-break: break-word">
+              <span ng-if="span.folded">&darr;</span>
+              <span>{{ span.targetid }}</span>
+            </td>
+            <td>
+              <table>
+                <tr>
+                  <td>
+                    <span class="label label-info" ng-bind="span.url_method" style="margin-right: 2px"></span>
+                  </td>
+                  <td ng-bind="span.rawurl"></td>
+                </tr>
+              </table>
+            </td>
+            <td class="nowrap" ng-bind="span.host"></td>
+            <td ng-bind="span.rqbl"></td>
+            <td ng-bind="span.rsbl"></td>
+            <td ng-bind="span.rc"></td>
+            <td class="nowrap" ng-bind="span.cum_duration_pretty"></td>
+            <td class="nowrap" ng-bind="span.cd_pretty"></td>
+            <td style="width: 40%;">
+              <div>
+                <span ng-if="$first || page[$index - 1].traceid != span.traceid">
+                  <a ng-href="index.html#/traces?traceid={{span.traceid}}&date_from={{span.trace_range_from}}&date_to={{span.trace_range_to}}"
+                      ng-bind="span.traceid"></a>
+                </span>
+                <span ng-if="$first || page[$index - 1].traceid != span.traceid" style='float: right'>{{span.trace_timestamp}}</span>
+              </div>
+              <span ng-if="span.style.cs > 0" class="span" ng-style="{'width':  + span.style.cs + '%'}" data-toggle="tooltip" data-placement="top"
+                  title="{{span.cs_title}} {{span.cs_pretty}}" tooltip></span>
+              <span ng-if="span.style.sr > 0" class="span span-td" ng-style="{'width':  + span.style.sr + '%'}" data-toggle="tooltip" data-placement="top"
+                  title="{{span.sr_title}} {{span.sr_pretty}}" tooltip></span>
+              <span class="span span-sd span-{{span.rc}}" ng-style="{'width':  + span.style.sd + '%'}" data-toggle="tooltip" data-placement="top"
+                  title="duration {{span.sd_pretty}}" ng-class="{'span-200': span.rc >= 200 && span.rc < 300, 'span-500': span.rc >= 500 && span.rc < 600}"
+                  tooltip></span>
+              <span ng-if="span.style.cr > 0" class="span span-td" ng-style="{'width':  + span.style.cr + '%'}" data-toggle="tooltip" data-placement="top"
+                  title="{{span.cr_title}} {{span.cr_pretty}}" tooltip></span>
+              <span ng-if="span.offset != 0" class="span" data-toggle="tooltip" tooltip title="clock offset">
+                {{span.offset_sign }}{{ span.offset_pretty }}
+              </span>
+            </td>
+            <td>
+              <a ng-if="$first || page[$index - 1].traceid != span.traceid" target="_blank"
+                  href="logs.html#/?from={{span.trace_range_from}}&to={{span.trace_range_to}}&traceid={{span.traceid}}&system={{span.trace_system}}">
+                view logs
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row" ng-if="pageNumber + 1 < total">
+    <div class="col-xs-12">
+      <div class="btn btn-default" style="width: 100%; height: 30px;" ng-click="show_page(pageNumber + 1);">
+        Page {{pageNumber + 1}} of {{total}} &darr;
+      </div>
+    </div>
+  </div>
+</div>

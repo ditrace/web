@@ -1,0 +1,16 @@
+{
+	"search_url": "/elasticsearch",
+	"logs_url": "logs",
+	"log_index_prefix":{
+		"undefined": "log_test_",
+		"ke": "ke-"
+	},
+	"groupBy": {
+		"url": "Url",
+		"rc": "Response code",
+		"url_method": "Url method",
+		"host": "Host",
+		"targetid": "Target"
+	},
+	"systems": ["ke", "diadoc", "diadoc-test", "edi-test"]
+}

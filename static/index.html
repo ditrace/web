@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html ng-app='dTrace'>
+  <head>
+    <title>DTrace</title>
+    <script type="text/javascript" src="common.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+  </head>
+  <body ng-controller='index as ctrl'>
+    <div class="container-fluid">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <dtrace-filter></dtrace-filter>
+          <dtrace-histogram model="histogram"></dtrace-histogram>
+        </div>
+        <div class="panel-content" style="padding: 10px">
+          <div class="row" style="margin-bottom:10px;">
+            <div class="col-xs-4">
+              <span class="btn btn-success" ng-click="ctrl.clear()">Clear</span>
+            </div>
+            <div class="col-xs-7">
+              <span ng-if="filter.cur_chain_prefix" class="label label-warning" ng-bind="filter.cur_chain_prefix"></span>
+              <span ng-if="filter.cur_chain_path">
+                <span ng-repeat="service in filter.current_chain_services track by $index"
+                    class="btn btn-success btn-xs" style="margin-right: 2px;"
+                    ng-click="filter.add_annotation('terms', 'targetid', service);">
+                  {{service}}
+                </span>
+              </span>
+            </div>
+            <div class="col-xs-1">
+              <span ng-if="api.querying" class="label label-success">Query...</span>
+            </div>
+          </div>
+          <div ng-if="api.query_err" class="row" style="margin-bottom:10px; padding: 20px ">
+            <pre ng-bind="api.query_err" class="bg-danger"></pre>
+          </div>
+          <dtrace-tabs filter="filter" traces="traces" chains="chains" groups="groups"></dtrace-tabs>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

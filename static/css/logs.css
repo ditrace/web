@@ -1,0 +1,9 @@
+.truncated { text-overflow: ellipsis; overflow: hidden; }
+.clickable { cursor: pointer; }
+.log-row { margin-top:2px; }
+.log-row:hover { background-color: #F1F1F1; }
+.field-name { font-weight: bold; }
+.nowrap { white-space: nowrap; }
+td { padding-left: 5px; padding-right: 5px; }
+table { border-collapse: collapse; }
+.hex { color: blue; cursor: pointer; }

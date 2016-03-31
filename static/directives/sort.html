@@ -1,0 +1,6 @@
+﻿<span>
+  <span ng-class="{'btn-default': active != name, 'btn-success': active == name }"  ng-click="apply();" class="btn btn-sm" ng-transclude>
+  </span>
+  <span ng-if="active == name && value === true">&uarr;</span>
+  <span ng-if="active == name && value === false">&darr;</span>
+</span>

@@ -1,0 +1,15 @@
+{
+	"search_url": "http://localhost:9200",
+	"logs_url": "http://localhost:9200",
+	"log_index_prefix":{
+		"undefined": "log_test_" 
+	},
+	"groupBy": {
+		"url": "Url",
+		"rc": "Response code",
+		"url_method": "Url method",
+		"host": "Host",
+		"targetid": "Target"
+	},
+	"systems": ["system"]
+}

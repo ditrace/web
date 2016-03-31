@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-xs-11" id="histogram"></div>
+  <div class="col-xs-1">
+    <div class="histogram-selection" style="margin-top: 10px;">
+        <dtrace-histogram-btn value="model.value_func" active="min" click="select(value);">Min</dtrace-histogram-btn>
+        <dtrace-histogram-btn value="model.value_func" active="max" click="select(value);">Max</dtrace-histogram-btn>
+    </div>
+    <div class="histogram-selection"><dtrace-histogram-btn value="model.value_func" active="p25" click="select(value);">25%</dtrace-histogram-btn></div>
+    <div class="histogram-selection"><dtrace-histogram-btn value="model.value_func" active="p50" click="select(value);">50%</dtrace-histogram-btn></div>
+    <div class="histogram-selection"><dtrace-histogram-btn value="model.value_func" active="p75" click="select(value);">75%</dtrace-histogram-btn></div>
+    <div class="histogram-selection"><dtrace-histogram-btn value="model.value_func" active="p95" click="select(value);">95%</dtrace-histogram-btn></div>
+    <div class="histogram-selection"><dtrace-histogram-btn value="model.value_func" active="p99" click="select(value);">99%</dtrace-histogram-btn></div>
+    <div class="histogram-selection"><dtrace-histogram-btn value="model.value_func" active="count" click="select(value);">Count</dtrace-histogram-btn></div>
+  </div>
+</div>

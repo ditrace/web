@@ -1,0 +1,17 @@
+﻿<div class="row">
+  <div class="col-xs-4">
+    <h5>
+        <a ng-href="{{item.link}}" class="btn btn-info btn-sm" ng-bind="item.bucket.key"></a>
+    </h5>
+  </div>
+  <div class="col-xs-1">
+        <a class="btn btn-success" ng-href="{{item.traces_link}}" ng-bind="item.bucket.doc_count"></a>
+  </div>
+  <div class="col-xs-1"><h5 ng-bind="item.min_duration"></h5></div>
+  <div class="col-xs-1"><h5 ng-bind="item.max_duration"></h5></div>
+  <div class="col-xs-1"><h5 ng-bind="item.p25"></h5></div>
+  <div class="col-xs-1"><h5 ng-bind="item.p50"></h5></div>
+  <div class="col-xs-1"><h5 ng-bind="item.p75"></h5></div>
+  <div class="col-xs-1"><h5 ng-bind="item.p95"></h5></div>
+  <div class="col-xs-1"><h5 ng-bind="item.p99"></h5></div>
+</div>

@@ -1,0 +1,9 @@
+import 'babel-polyfill';
+import 'angular';
+import 'angular-mocks';
+import '../static/app';
+import './models/filter';
+import './models/chainrow';
+import './models/grouprow';
+import './models/span';
+import './models/traces';

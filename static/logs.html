@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html ng-app='traceLogs'>
+  <head>
+    <title>Logs</title>
+    <script type="text/javascript" src="common.js"></script>
+    <script type="text/javascript" src="logs.js"></script>
+  </head>
+  <body ng-controller="logs">
+    <div class="container-fluid">
+      <div class="panel panel-default">
+        <div class="panel-content" style="padding: 10px">
+          <div ng-if="raw_content" class="pull-right">
+            <a href="" id="link" ng-click="download($event)" download="{{traceid}}.txt">Download</a>
+          </div>
+          <div class="label label-success" style="float: left" ng-bind="querying"></div>
+          <div style="color: gray; font: small; float: right; margin-right: 30px">press alt key for hex highlight</div>
+          <div style="height: 20px"></div>
+          <h1 ng-if="logs.length == 0">No logs found</h1>
+          <table>
+            <tr>
+              <td>
+                <span ng-class="{'glyphicon-plus': !unfolded, 'glyphicon-minus':unfolded }"
+                    class="glyphicon clickable" ng-click="unfold()"></span>
+                <span style="display: inline-block; margin-left: 4px;"><h4>Timestamp</h4></span>
+              </td>
+              <td><h4>Level</h4></td>
+              <td><h4>Host</h4></td>
+              <td><h4>Process</h4></td>
+              <td><h4>Message</h4></td>
+            </tr>
+            <tr ng-repeat-start="log in logs"></tr>
+            <tr  class="log-row">
+              <td class="nowrap clickable" ng-click="log.unfold()">
+                <span ng-if="!log.unfolded">+</span>
+                <span ng-if="log.unfolded">-</span>
+                <span ng-bind="log.data['@timestamp']"></span>
+              </td>
+              <td class="nowrap" ng-bind="log.data.Level"></td>
+              <td class="nowrap" ng-bind="log.data.HostName"></td>
+              <td ng-bind="log.data.AppDomain"></td>
+              <td>
+                <div class="text" ng-bind="log.data.Message"></div>
+                <div ng-if="log.Exception" ng-bind="log.data.Exception"></div>
+              </td>
+            </tr>
+            <tr ng-if="log.unfolded" style="margin: 10px">
+              <td colspan="6">
+                <div class="row" ng-repeat="(field, value) in log.data">
+                  <div class="col-xs-2 field-name" ng-bind="field"></div>
+                  <div class="col-xs-10 text" ng-bind="value"></div>
+                </div>
+              </td>
+            </tr>
+            <tr ng-repeat-end></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

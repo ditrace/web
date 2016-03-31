@@ -1,0 +1,50 @@
+<div>
+    <div ng-if="rows.length" class="row">
+        <div class="col-xs-4">
+            <h4>Path</h4>
+        </div>
+        <div class="col-xs-1">
+            <h4>
+                <dtrace-sort active="'count'" name="count" value="filter.selection_count_order">Count</dtrace-sort>
+            </h4>
+        </div>
+        <div class="col-xs-1">
+            <h4>
+                <dtrace-sort active="filter.selection_order_name" value="filter.selection_order_value" name="min">Min</dtrace-sort>
+            </h4>
+        </div>
+        <div class="col-xs-1">
+            <h4>
+                <dtrace-sort active="filter.selection_order_name" value="filter.selection_order_value" name="max">Max</dtrace-sort>
+            </h4>
+        </div>
+        <div class="col-xs-1">
+            <h4>
+                <dtrace-sort active="filter.selection_order_name" value="filter.selection_order_value" name="percentiles_duration.25">25%</dtrace-sort>
+            </h4>
+        </div>
+        <div class="col-xs-1">
+            <h4>
+                <dtrace-sort active="filter.selection_order_name" value="filter.selection_order_value" name="percentiles_duration.50">50%</dtrace-sort>
+            </h4>
+        </div>
+        <div class="col-xs-1">
+            <h4>
+                <dtrace-sort active="filter.selection_order_name" value="filter.selection_order_value" name="percentiles_duration.75">75%</dtrace-sort>
+            </h4>
+        </div>
+        <div class="col-xs-1">
+            <h4>
+                <dtrace-sort active="filter.selection_order_name" value="filter.selection_order_value" name="percentiles_duration.95">95%</dtrace-sort>
+            </h4>
+        </div>
+        <div class="col-xs-1">
+            <h4>
+                <dtrace-sort active="filter.selection_order_name" value="filter.selection_order_value" name="percentiles_duration.99">99%</dtrace-sort>
+            </h4>
+        </div>
+    </div>
+    <div ng-repeat="row in rows">
+        <dtrace-row item="row"></dtrace-row>
+    </div>
+</div>
