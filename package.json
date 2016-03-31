@@ -1,7 +1,7 @@
 {
   "name": "dtrace",
   "scripts": {
-    "dist": "webpack -p",
+    "build": "webpack -p",
     "start": "webpack-dev-server --content-base static/"
   },
   "devDependencies": {
