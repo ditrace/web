@@ -72,14 +72,11 @@ export class Span {
         if (this.chain_prefix == this.props.prefix && this.chain_services[this.chain_level] === this.props.targetid) {
             this.selected = true;
             this.hidden = false;
-            this.folded = fold && this.chain_level == this.chain_services.length - 1 && this.children[this.props.spanid].length > 0;
+            this.folded = fold && this.chain_level == this.chain_services.length - 1 && this.children[this.props.spanid] !== undefined;
         }
 
         if (this.props.parentspanid === undefined || this.props.root !== undefined) {
             this.hidden = false;
-        }
-
-        if (this.hidden === false) {
             this.folded = fold && this.children != undefined;
         }
 
