@@ -33,3 +33,6 @@ deploy:
     tags: true
     condition: $TRAVIS_NODE_VERSION = 4
     repo: ditrace/web
+cache:
+  directories:
+  - $HOME/node_modules
