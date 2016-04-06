@@ -29,13 +29,7 @@ export class FilterService {
     set_location() {
         const cur_state = this.state.get();
         const location_state = this.$location.search();
-        var equal = true;
-        angular.forEach(cur_state, (value, key) => {
-            if(location_state[key] !== value){
-                equal = false;
-            }
-        });
-        if(!equal)
+        if(!angular.equals(cur_state, location_state))
             this.$location.search(cur_state);
     }
 
