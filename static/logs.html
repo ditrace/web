@@ -26,7 +26,7 @@
               <td><h4>Process</h4></td>
               <td><h4>Message</h4></td>
             </tr>
-            <tr ng-repeat-start="log in logs"></tr>
+            <tr ng-repeat-start="log in logs | orderBy:'timestamp'"></tr>
             <tr  class="log-row">
               <td class="nowrap clickable" ng-click="log.unfold()">
                 <span ng-if="!log.unfolded">+</span>
