@@ -65,6 +65,7 @@ export class DTraceFilter {
             $scope.update();
         };
         $scope.update = () => {
+            this.filter.state.traceid = $scope.traceid;
             this.filter.state.group_field = $scope.group_field;
             this.filter.state.aggr_field = $scope.aggr_field;
             this.filter.state.annotations = $scope.annotations;
