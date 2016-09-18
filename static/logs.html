@@ -34,7 +34,7 @@
                 <span ng-bind="log.data['@timestamp']"></span>
               </td>
               <td class="nowrap" ng-bind="log.data.Level"></td>
-              <td class="nowrap" ng-bind="log.data.HostName"></td>
+              <td class="nowrap" ng-bind="log.data.HostName || log.data.Host"></td>
               <td ng-bind="log.data.AppDomain"></td>
               <td>
                 <div class="text" ng-bind="log.data.Message"></div>

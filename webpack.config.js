@@ -88,8 +88,9 @@ module.exports = {
     },
     devServer: {
         proxy: {
-            '/elasticsearch/*': 'http://localhost',
+            '/ditrace/*': 'http://localhost',
             '/logs/*': 'http://localhost',
+            '/logsearchapi/*': 'http://localhost'
         },
     },
     devtool: "#source-map"

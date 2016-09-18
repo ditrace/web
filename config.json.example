@@ -1,13 +1,16 @@
 {
-	"search_url": "http://localhost:9200",
-	"logs_url": "http://localhost:9200",
+	"search_url": "http://localhost/ditrace",
+	"logs_url": "http://localhost/logs",
 	"log_index_prefix":{
 		"undefined": "log_test_" 
+	},
+	"log_search_api":{
+		"ke": "http://localhost/logsearchapi"
 	},
 	"groupBy": {
 		"url": "Url",
 		"rc": "Response code",
-		"url_method": "Url method",
+		"url_method": "Url method",Ï
 		"host": "Host",
 		"targetid": "Target"
 	},

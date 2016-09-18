@@ -1,6 +1,8 @@
 import * as angular from 'angular';
 import {LogsController} from './controllers/logs';
 import {Config} from './services/config';
+import {ElasticSearchLogsProvider} from './services/es';
+import {LogsSearchApiProvider} from './services/logsearchapi';
 
 declare function require(string): any;
 
@@ -11,6 +13,8 @@ require('./css/logs.css');
 var app = angular.module('traceLogs', []);
 app.controller("logs", LogsController);
 app.service('config', Config);
+app.service('es', ElasticSearchLogsProvider);
+app.service('logsearchapi', LogsSearchApiProvider);
 
 var hexRegexp = new RegExp('(([0-9a-fA-F\-][0-9a-fA-F\-]){2}){4,}', 'ig');
 
