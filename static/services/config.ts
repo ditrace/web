@@ -1,17 +1,18 @@
 export interface IConfig {
-	search_url: string;
-	logs_url: string;
-	log_index_prefix: {};
-	groupBy: {};
-	systems: Array<string>;
+    search_url: string;
+    logs_url: string;
+    log_index_prefix: {};
+    log_search_api: {};
+    groupBy: {};
+    systems: Array<string>;
 }
 
 export class Config {
-    
+
     private p: ng.IPromise<IConfig>;
-    
-    constructor(private $http: ng.IHttpService, $q: ng.IQService){
-        const d = $q.defer(); 
+
+    constructor(private $http: ng.IHttpService, $q: ng.IQService) {
+        const d = $q.defer();
         this.p = d.promise;
         this.$http({
             url: 'config.json',
@@ -20,10 +21,10 @@ export class Config {
             d.resolve(config);
         });
     }
-    
-    get(): ng.IPromise<IConfig>{
+
+    get(): ng.IPromise<IConfig> {
         return this.p;
     }
-    
+
     static $inject = ['$http', '$q'];
 }

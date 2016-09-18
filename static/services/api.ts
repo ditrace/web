@@ -7,7 +7,10 @@ export class Api {
     querying: boolean;
     query_err: string;
 
-    constructor(private config: Config, private $http: ng.IHttpService, private filter: FilterService, private queries: Queries) {
+    static $inject = ['config', '$http', 'filter', 'queries'];
+
+    constructor(private config: Config, private $http: ng.IHttpService, private filter: FilterService,
+        private queries: Queries) {
     }
 
     query(data, params?): ng.IPromise<any> {
@@ -34,7 +37,5 @@ export class Api {
         }).then((response) => {
             return response.data;
         });
-    }    
-
-    static $inject = ['config', '$http', 'filter', 'queries'];
+    }
 }
