@@ -35,7 +35,7 @@
               </td>
               <td class="nowrap" ng-bind="log.data.Level"></td>
               <td class="nowrap" ng-bind="log.data.HostName || log.data.Host"></td>
-              <td ng-bind="log.data.AppDomain"></td>
+              <td ng-bind="log.data.AppDomain || log.data.ServiceId"></td>
               <td>
                 <div class="text" ng-bind="log.data.Message"></div>
                 <div ng-if="log.Exception" ng-bind="log.data.Exception"></div>
