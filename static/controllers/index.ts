@@ -60,7 +60,7 @@ export class IndexController {
         const trace_conditions = this.filter.state.get_trace_conditions();
         const chains_conditions = this.filter.state.get_next_chains_conditions();
         const span_conditions = this.filter.state.get_span_conditions();
-        return this.api.query(
+        return this.api.elasticsearch(
             this.queries.histogram(trace_conditions, chains_conditions, span_conditions, '15m'),
             { search_type: 'count' }
         ).then((data: IHistogramData) => {
@@ -72,7 +72,7 @@ export class IndexController {
         const trace_conditions = this.filter.state.get_trace_conditions();
         const chains_conditions = this.filter.state.get_next_chains_conditions();
         const order = this.filter.state.get_order();
-        return this.api.query(this.queries.chains(trace_conditions, chains_conditions, order), { search_type: 'count' }).then((data) => {
+        return this.api.elasticsearch(this.queries.chains(trace_conditions, chains_conditions, order), { search_type: 'count' }).then((data) => {
             const chains = [];
             angular.forEach(data.aggregations.chains.filtered.chain_path.buckets, (bucket) => {
                 chains.push(new ChainRow(bucket, chains_conditions['chains.level'], chains_conditions['chains.prefix'], this.filter.state));
@@ -89,7 +89,7 @@ export class IndexController {
         const chains_conditions = this.filter.state.get_next_chains_conditions();
         const span_conditions = this.filter.state.get_span_conditions();
         const order = this.filter.state.get_order();
-        return this.api.query(this.queries.groups(trace_conditions, chains_conditions, span_conditions,
+        return this.api.elasticsearch(this.queries.groups(trace_conditions, chains_conditions, span_conditions,
                               this.filter.state.group_field, this.filter.state.aggr_field, order),
                               { search_type: 'count' }).then((data) => {
             const groups = [];
@@ -113,19 +113,40 @@ export class IndexController {
         const chain_conditions = filter.state.get_chain_conditions();
         const trace_conditions = filter.state.get_trace_conditions();
         const order = filter.state.get_order();
-        return this.api.query(
-            this.queries.spans(
-                trace_conditions,
-                chain_conditions,
-                span_conditions,
-                order,
-                filter.state.qpage,
-                filter.state.size
-            ), {}
-        ).then((data) => {
-            this.$scope.traces = new Traces(
-                data.hits, filter.state.cur_chain_prefix, filter.state.current_chain_services
-            );
+        this.config.get().then((config) => {
+            var system = trace_conditions.terms['system'];
+            var traceid = trace_conditions.prefix['id'];
+            if(traceid && system && config.log_search_api[system]){
+                return this.api.logsearch(traceid, system, trace_conditions.date.from, trace_conditions.date.to)
+                .then((data) => {
+                    var hits = {
+                        hits: data.map((trace) => {
+                            return {
+                                _source: trace
+                            };
+                        }),
+                        total: data.length
+                    };
+                    this.$scope.traces = new Traces(
+                        hits, filter.state.cur_chain_prefix, filter.state.current_chain_services
+                    );
+                });
+            }else{
+                return this.api.elasticsearch(
+                    this.queries.spans(
+                        trace_conditions,
+                        chain_conditions,
+                        span_conditions,
+                        order,
+                        filter.state.qpage,
+                        filter.state.size
+                    ), {}
+                ).then((data) => {
+                    this.$scope.traces = new Traces(
+                        data.hits, filter.state.cur_chain_prefix, filter.state.current_chain_services
+                    );
+                });
+            }
         });
     }
 
