@@ -1,6 +1,53 @@
 language: node_js
+sudo: false
 node_js:
-- '4'
+  - '4'
+addons:
+  apt:
+    packages:
+      rpm
+
+before_install:
+  - gem install fpm
+install:
+  - make test
+script:
+  - make build
+  - make packages
+before_deploy:
+  - export RELEASE_PKG_TAR=$(ls build/ditrace-web*.tar.gz)
+  - export RELEASE_PKG_RPM=$(ls build/ditrace-web*.rpm)
+  - export RELEASE_PKG_DEB=$(ls build/ditrace-web*.deb)
+deploy:
+  - provider: releases
+    api_key:
+      secure: Z0vH+sbXbGBNFOTtFFMMEk5dFPfcHNH8dg0/3BeXdGIuR5FOBmSxu8ELZ3NC8ZX8gHADFZ/laMFisWRmUly8CKXLEs2o3SgIFvAaTdv6y5phyTsKlRgXFmSG8HD1j2Ej068GpgHoigKd2FG+rpxiDhoi8HpacqNzawweEz0TCaXE7yRNW/Sn0Tbd/xysc/u9jfVhEZlr50iqB2iP0TSmthDApxREL1F0KPkYzv16CcBwT/k6hekYegGL+lA66QDJhTV/A4OZ9pgm7MwppzQAbCVTFbuttEdc14N8OxD9Zsux6Y1jc1Ju8nfaHqJPNvpqFO2PG6ZrV3VkO4W8Uo7D3GXgUBnWEIoEjKg9AHybNcuuaHBt1RrFDUdQs7xOuwL42NeDwf4I3Ta5YJemhzXj+73GBe5hpy3VKU+QJkzdWear0CJcosvBNaCaMktMntDW9SkW606001QFiu2eLhVz/CxoAxzChXj1SnEeiICX8Sm6eAPEOndkJwdufv5HGv5QpLWQfiJjp5SxIojKhqdcyFpGPCuMqc853yK0agVWJlnpbRkGxlqVrnKgKEJOPL6hYlGVzhk05hFpxVmpqA0XZoq8PZ/IetTJBcaLyT+Ukaz49R4kp5O5sVFDGxVE0jGUbpBqNIJ1H+yTHckpP3QVAwgXH1trQXbTPHQJDVGzRoo=
+    file:
+      - "${RELEASE_PKG_TAR}"
+      - "${RELEASE_PKG_RPM}"
+      - "${RELEASE_PKG_DEB}"
+    skip_cleanup: true
+    on:
+      tags: true
+      condition: $TRAVIS_NODE_VERSION = 4
+      repo: ditrace/web
+  - provider: script
+    script: "curl -sS --fail -F \"uploadfile=@${RELEASE_PKG_RPM}\" -H 'token: ${UPLOAD_TOKEN}' \"${UPLOAD_URL}\""
+    skip_cleanup: true
+    on:
+      branch: master
+      condition: $TRAVIS_NODE_VERSION = 4
+  - provider: script
+    script: "curl -sS --fail -F \"uploadfile=@${RELEASE_PKG_RPM}\" -H 'token: ${UPLOAD_TOKEN}' \"${UPLOAD_URL}\""
+    skip_cleanup: true
+    on:
+      tags: true
+      condition: $TRAVIS_NODE_VERSION = 4
+
+cache:
+  directories:
+    - $HOME/node_modules
+
 notifications:
   webhooks:
     urls:
@@ -8,31 +55,3 @@ notifications:
     on_success: change
     on_failure: always
     on_start: never
-before_install:
-- sudo apt-get install -y rpm
-- gem install fpm
-install:
-- make test
-script:
-- make build
-- make packages
-before_deploy:
-- export RELEASE_PKG_TAR=$(ls build/ditrace-web*.tar.gz)
-- export RELEASE_PKG_RPM=$(ls build/ditrace-web*.rpm)
-- export RELEASE_PKG_DEB=$(ls build/ditrace-web*.deb)
-deploy:
-  provider: releases
-  api_key:
-    secure: Z0vH+sbXbGBNFOTtFFMMEk5dFPfcHNH8dg0/3BeXdGIuR5FOBmSxu8ELZ3NC8ZX8gHADFZ/laMFisWRmUly8CKXLEs2o3SgIFvAaTdv6y5phyTsKlRgXFmSG8HD1j2Ej068GpgHoigKd2FG+rpxiDhoi8HpacqNzawweEz0TCaXE7yRNW/Sn0Tbd/xysc/u9jfVhEZlr50iqB2iP0TSmthDApxREL1F0KPkYzv16CcBwT/k6hekYegGL+lA66QDJhTV/A4OZ9pgm7MwppzQAbCVTFbuttEdc14N8OxD9Zsux6Y1jc1Ju8nfaHqJPNvpqFO2PG6ZrV3VkO4W8Uo7D3GXgUBnWEIoEjKg9AHybNcuuaHBt1RrFDUdQs7xOuwL42NeDwf4I3Ta5YJemhzXj+73GBe5hpy3VKU+QJkzdWear0CJcosvBNaCaMktMntDW9SkW606001QFiu2eLhVz/CxoAxzChXj1SnEeiICX8Sm6eAPEOndkJwdufv5HGv5QpLWQfiJjp5SxIojKhqdcyFpGPCuMqc853yK0agVWJlnpbRkGxlqVrnKgKEJOPL6hYlGVzhk05hFpxVmpqA0XZoq8PZ/IetTJBcaLyT+Ukaz49R4kp5O5sVFDGxVE0jGUbpBqNIJ1H+yTHckpP3QVAwgXH1trQXbTPHQJDVGzRoo=
-  file:
-    - "${RELEASE_PKG_TAR}"
-    - "${RELEASE_PKG_RPM}"
-    - "${RELEASE_PKG_DEB}"
-  skip_cleanup: true
-  on:
-    tags: true
-    condition: $TRAVIS_NODE_VERSION = 4
-    repo: ditrace/web
-cache:
-  directories:
-  - $HOME/node_modules
