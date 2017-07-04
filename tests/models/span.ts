@@ -9,7 +9,6 @@ describe("Span", () => {
         span = new Span(<ISpan>{
             host: "vm-auth11",
             prefix: "",
-            rawurl: "/v5.5/sessions/00000000000000",
             rc: "200",
             sd: 270531,
             spanid: "85b79ddd",

@@ -5,7 +5,6 @@ export interface ISpan {
     sd: number;
     prefix: string;
     host: string;
-    rawurl: string;
     url: string;
     spanid: string;
     parentspanid: string;
