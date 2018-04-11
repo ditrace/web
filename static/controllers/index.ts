@@ -116,7 +116,7 @@ export class IndexController {
         this.config.get().then((config) => {
             var system = trace_conditions.terms['system'];
             var traceid = trace_conditions.prefix['id'];
-            if(traceid && system && config.log_search_api[system]){
+            if(traceid && (!system || config.log_search_api[system])){
                 return this.api.logsearch(traceid, system, trace_conditions.date.from, trace_conditions.date.to)
                 .then((data) => {
                     var hits = {
