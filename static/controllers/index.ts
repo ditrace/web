@@ -114,9 +114,9 @@ export class IndexController {
         const trace_conditions = filter.state.get_trace_conditions();
         const order = filter.state.get_order();
         this.config.get().then((config) => {
-            var system = trace_conditions.terms['system'];
+            var system = trace_conditions.terms['system'] || 'all';
             var traceid = trace_conditions.prefix['id'];
-            if(traceid && (!system || config.log_search_api[system])){
+            if(traceid && config.log_search_api[system]){
                 return this.api.logsearch(traceid, system, trace_conditions.date.from, trace_conditions.date.to)
                 .then((data) => {
                     var hits = {
